@@ -1,0 +1,75 @@
+@RELATION pacman
+
+@ATTRIBUTE pacmanx NUMERIC
+@ATTRIBUTE pacmany NUMERIC
+@ATTRIBUTE legalW NUMERIC
+@ATTRIBUTE legalE NUMERIC
+@ATTRIBUTE legalN NUMERIC
+@ATTRIBUTE legalS NUMERIC
+@ATTRIBUTE numghost NUMERIC
+@ATTRIBUTE alivePacman NUMERIC
+@ATTRIBUTE alive_Ghost1 NUMERIC
+@ATTRIBUTE alive_Ghost2 NUMERIC
+@ATTRIBUTE alive_Ghost3 NUMERIC
+@ATTRIBUTE alive_Ghost4 NUMERIC
+@ATTRIBUTE ghost1x NUMERIC
+@ATTRIBUTE ghost1y NUMERIC
+@ATTRIBUTE ghost2x NUMERIC
+@ATTRIBUTE ghost2y NUMERIC
+@ATTRIBUTE ghost3x NUMERIC
+@ATTRIBUTE ghost3y NUMERIC
+@ATTRIBUTE ghost4x NUMERIC
+@ATTRIBUTE ghost4y NUMERIC
+@ATTRIBUTE g1_west NUMERIC
+@ATTRIBUTE g1_stop NUMERIC
+@ATTRIBUTE g1_east NUMERIC
+@ATTRIBUTE g1_north NUMERIC
+@ATTRIBUTE g1_south NUMERIC
+@ATTRIBUTE g2_west NUMERIC
+@ATTRIBUTE g2_stop NUMERIC
+@ATTRIBUTE g2_east NUMERIC
+@ATTRIBUTE g2_north NUMERIC
+@ATTRIBUTE g2_south NUMERIC
+@ATTRIBUTE g3_west NUMERIC
+@ATTRIBUTE g3_stop NUMERIC
+@ATTRIBUTE g3_east NUMERIC
+@ATTRIBUTE g3_north NUMERIC
+@ATTRIBUTE g3_south NUMERIC
+@ATTRIBUTE g4_west NUMERIC
+@ATTRIBUTE g4_stop NUMERIC
+@ATTRIBUTE g4_east NUMERIC
+@ATTRIBUTE g4_north NUMERIC
+@ATTRIBUTE g4_south NUMERIC
+@ATTRIBUTE ghost1dist NUMERIC
+@ATTRIBUTE ghost2dist NUMERIC
+@ATTRIBUTE ghost3dist NUMERIC
+@ATTRIBUTE ghost4dist NUMERIC
+@ATTRIBUTE pac_dots NUMERIC
+@ATTRIBUTE distance_dots NUMERIC
+@ATTRIBUTE score NUMERIC
+@ATTRIBUTE class {Stop, East, West, North, South}
+@ATTRIBUTE next_score NUMERIC
+
+
+@DATA
+1, 10, 0, 0, 1, 1, 4, 0, 1, 1, 1, 1, 6, 5, 6, 9, 8, 11, 14, 6, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 10, 6, 8, 17, 2, 13, -1, South, -2
+1, 9, 0, 1, 1, 1, 4, 0, 1, 1, 1, 1, 6, 4, 5, 9, 8, 11, 14, 5, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 10, 4, 9, 17, 2, 12, -2, South, -3
+1, 8, 0, 1, 1, 1, 4, 0, 1, 1, 1, 1, 6, 3, 5, 8, 8, 11, 14, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 10, 4, 10, 16, 2, 11, -3, South, -4
+2, 8, 1, 1, 1, 1, 4, 0, 1, 1, 1, 1, 7, 3, 6, 8, 9, 11, 14, 6, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 10, 4, 10, 14, 2, 10, -4, East, -5
+3, 8, 1, 1, 1, 1, 4, 0, 1, 1, 1, 1, 8, 3, 7, 8, 9, 11, 14, 7, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 10, 4, 9, 12, 2, 9, -5, East, -6
+4, 8, 1, 1, 1, 1, 4, 0, 1, 1, 1, 1, 8, 4, 7, 8, 8, 11, 15, 7, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 8, 3, 7, 12, 2, 8, -6, East, -7
+5, 8, 1, 1, 1, 1, 4, 0, 1, 1, 1, 1, 9, 4, 8, 8, 9, 11, 14, 7, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 8, 3, 7, 10, 2, 7, -7, East, -8
+5, 7, 1, 1, 1, 0, 4, 0, 1, 1, 1, 1, 10, 4, 8, 7, 8, 11, 13, 7, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 8, 3, 7, 8, 2, 6, -8, South, -9
+6, 7, 1, 1, 1, 0, 4, 0, 1, 1, 1, 1, 9, 4, 9, 7, 9, 11, 12, 7, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 6, 3, 7, 6, 2, 5, -9, East, -10
+7, 7, 1, 1, 1, 0, 4, 0, 1, 1, 1, 1, 9, 3, 8, 7, 9, 11, 13, 7, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 6, 1, 6, 6, 2, 4, -10, East, 189
+8, 7, 1, 1, 1, 1, 4, 0, 1, 0, 1, 1, 10, 3, 8, 7, 9, 11, 13, 8, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 6, -1, 5, 6, 2, 3, 189, East, 188
+8, 8, 1, 1, 1, 1, 4, 0, 1, 0, 1, 1, 11, 3, 3, 1, 10, 11, 12, 8, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 8, -1, 5, 4, 2, 4, 188, North, 187
+9, 8, 1, 1, 1, 1, 4, 0, 1, 0, 1, 1, 10, 3, 3, 1, 10, 11, 12, 8, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 6, -1, 4, 3, 2, 3, 187, East, 186
+10, 8, 1, 0, 1, 1, 4, 0, 1, 0, 1, 1, 10, 3, 3, 1, 10, 11, 12, 9, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 5, -1, 3, 3, 2, 2, 186, East, 185
+10, 9, 1, 1, 1, 1, 4, 0, 1, 0, 1, 1, 10, 4, 3, 1, 10, 10, 11, 9, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 5, -1, 1, 1, 2, 3, 185, North, 584
+10, 10, 0, 1, 1, 1, 4, 0, 1, 0, 0, 0, 9, 4, 3, 1, 10, 10, 7, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 7, -1, -1, -1, 2, 4, 584, North, 583
+10, 9, 1, 1, 1, 1, 4, 0, 1, 0, 0, 0, 9, 5, 3, 1, 5, 1, 7, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 5, -1, -1, -1, 2, 3, 583, South, 582
+10, 8, 1, 0, 1, 1, 4, 0, 1, 0, 0, 0, 9, 6, 3, 1, 5, 1, 7, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 3, -1, -1, -1, 2, 2, 582, South, 581
+10, 7, 1, 0, 1, 1, 4, 0, 1, 0, 0, 0, 9, 5, 3, 1, 5, 1, 7, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 3, -1, -1, -1, 2, 1, 581, South, 680
+10, 6, 1, 0, 1, 1, 4, 0, 1, 0, 0, 0, 9, 5, 3, 1, 5, 1, 7, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 2, -1, -1, -1, 1, 8, 680, South, 879
+10, 5, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 10, 5, 3, 1, 5, 1, 7, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -1, -1, -1, -1, 1, 9, 879, South, 99999999
