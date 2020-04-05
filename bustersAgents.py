@@ -117,22 +117,26 @@ class BustersKeyboardAgent(BustersAgent, KeyboardAgent):
         return KeyboardAgent.getAction(self, gameState)
 
 
-    def printLineData(self, state): ##################################################################################################################################################
+    def scorefun(self,state):
+        return (state.getScore())
+
+
+    def printLineData(self, state):  ##################################################################################################################################################
         pacmanx, pacmany = state.getPacmanPosition()
 
         legal_actions_bool = ""
         if "West" in state.getLegalPacmanActions():
-            legal_actions_bool += "1,"
+            legal_actions_bool += "1, "
         else:
-            legal_actions_bool += "0,"
+            legal_actions_bool += "0, "
         if "East" in state.getLegalPacmanActions():
-            legal_actions_bool += "1,"
+            legal_actions_bool += "1, "
         else:
-            legal_actions_bool += "0,"
+            legal_actions_bool += "0, "
         if "North" in state.getLegalPacmanActions():
-            legal_actions_bool += "1,"
+            legal_actions_bool += "1, "
         else:
-            legal_actions_bool += "0,"
+            legal_actions_bool += "0, "
         if "South" in state.getLegalPacmanActions():
             legal_actions_bool += "1"
         else:
@@ -182,78 +186,14 @@ class BustersKeyboardAgent(BustersAgent, KeyboardAgent):
             ghostspos,
             ghost_dir,
             ghostdist,
+            str(state.getNumFood()),
+            str(state.getDistanceNearestFood()),
             str(state.getScore()),
             str(state.data.agentStates[0].getDirection())
         ])
 
         return s
 
-
-    # def printLineDataV1(self, state):
-    #     pacmanx, pacmany = state.getPacmanPosition()
-    #
-    #     ghostdist = ""
-    #     for dist in state.data.ghostDistances:
-    #         if dist is None:
-    #             dist = -1
-    #
-    #         ghostdist = ghostdist + str(dist) + ", "
-    #     ghostdist = ghostdist[:-2]
-    #
-    #     """
-    #     ghostspos = ""
-    #     for ghost in state.getGhostPositions():
-    #         ghostx, ghosty = ghost
-    #         ghostspos = ghostspos + str(ghostx) + ", " + str(ghosty) + ", "
-    #     ghostspos = ghostspos[:-2]
-    #     """
-    #
-    #
-    #     s = ", ".join([
-    #         str(pacmanx),
-    #         str(pacmany),
-    #         ghostdist,
-    #         #ghostspos,
-    #         str(state.getScore()),
-    #         str(state.data.agentStates[0].getDirection())
-    #     ])
-    #
-    #     return s
-    #
-    #
-    #
-    #
-    # def printLineDataV2(self, state):
-    #
-    #     """
-    #     pacmanx, pacmany = state.getPacmanPosition()
-    #
-    #     ghostdist = ""
-    #     for dist in state.data.ghostDistances:
-    #         if dist is None:
-    #             dist = -1
-    #
-    #         ghostdist = ghostdist + str(dist) + ", "
-    #     ghostdist = ghostdist[:-2]
-    #     """
-    #
-    #     ghostspos = ""
-    #     for ghost in state.getGhostPositions():
-    #         ghostx, ghosty = ghost
-    #         ghostspos = ghostspos + str(ghostx) + ", " + str(ghosty) + ", "
-    #     ghostspos = ghostspos[:-2]
-    #
-    #
-    #     s = ", ".join([
-    #         #str(pacmanx),
-    #         #str(pacmany),
-    #         #ghostdist,
-    #         ghostspos,
-    #         #str(state.getScore())
-    #         str(state.data.agentStates[0].getDirection())
-    #     ])
-    #
-    #     return s
 
 
 from distanceCalculator import Distancer

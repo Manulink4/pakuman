@@ -718,7 +718,7 @@ class Game:
                     score = agent.scorefun(self.state)
 
             if hasattr(agent, "printLineData"):
-                if not os.path.exists("all_data_pacman.arff"):
+                if not os.path.exists("test_othermaps_keyboard.arff"):
 
                     header = "@RELATION pacman\n" \
                              "\n" \
@@ -775,13 +775,13 @@ class Game:
                              "\n" \
                              "@DATA\n"
 
-                    with open("all_data_pacman.arff", "a") as infile:
+                    with open("test_othermaps_keyboard.arff", "a") as infile:
                         infile.write(header)
                         infile.write(agent.printLineData(self.state))
                         restart = False
 
                 else:
-                    with open("all_data_pacman.arff", "a") as infile:
+                    with open("test_othermaps_keyboard.arff", "a") as infile:
                         if score is not None:
                             infile.write(", " + str(score) + "\n" + agent.printLineData(self.state))
                         else:
@@ -823,7 +823,7 @@ class Game:
                     return
         self.display.finish()
 
-        with open("all_data_pacman.arff", "a") as infile:
+        with open("test_othermaps_keyboard.arff", "a") as infile:
             infile.write(", 99999999")
             restart = False
 
