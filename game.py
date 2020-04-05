@@ -615,6 +615,7 @@ class Game:
         agentIndex = self.startingIndex
         numAgents = len( self.agents )
         step = 0
+        restart = True
         while not self.gameOver:
             # Fetch the next agent
             agent = self.agents[agentIndex]
@@ -710,8 +711,11 @@ class Game:
 
             #ESTA VA A SER LA FUNCION QUE PRINTEE TODOS LOS ATRIBUTOS###############################################################################
 
-            if hasattr(agent, "scorefun"):
-                score = agent.scorefun(self.state)
+            if restart is True:
+                score = None
+            else:
+                if hasattr(agent, "scorefun"):
+                    score = agent.scorefun(self.state)
 
             if hasattr(agent, "printLineData"):
                 if not os.path.exists("all_data_pacman.arff"):
@@ -774,10 +778,16 @@ class Game:
                     with open("all_data_pacman.arff", "a") as infile:
                         infile.write(header)
                         infile.write(agent.printLineData(self.state))
+                        restart = False
 
                 else:
                     with open("all_data_pacman.arff", "a") as infile:
-                        infile.write(", " + str(score) + "\n" + agent.printLineData(self.state))
+                        if score is not None:
+                            infile.write(", " + str(score) + "\n" + agent.printLineData(self.state))
+                        else:
+                            infile.write("\n" + agent.printLineData(self.state))
+                            restart = False
+
 
 
 
@@ -815,4 +825,5 @@ class Game:
 
         with open("all_data_pacman.arff", "a") as infile:
             infile.write(", 99999999")
+            restart = False
 
