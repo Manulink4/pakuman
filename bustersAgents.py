@@ -11,7 +11,7 @@
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
-
+from wekaI import Weka
 import util
 from game import Agent
 from game import Directions
@@ -71,6 +71,8 @@ class BustersAgent:
         self.inferenceModules = [inferenceType(a) for a in ghostAgents]
         self.observeEnable = observeEnable
         self.elapseTimeEnable = elapseTimeEnable
+        self.weka = Weka()
+        self.weka.start_jvm()
 
     def registerInitialState(self, gameState):
         "Initializes beliefs and inference modules"
@@ -435,25 +437,63 @@ class BasicAgentAA(BustersAgent):
         move = Directions.STOP
         legal = gameState.getLegalActions(0)
 
-        goal = closest_ghost(gameState)
-        start = gameState.getPacmanPosition()
-        maze = gameState.getWalls()
+        # goal = closest_ghost(gameState)
+        # start = gameState.getPacmanPosition()
+        # maze = gameState.getWalls()
+        #
+        # path = aStar(start, goal, maze)
+        # path_next = path[1].position
+        #
+        # next_move = path_next[0]-start[0], path_next[1]-start[1]
 
-        path = aStar(start, goal, maze)
-        path_next = path[1].position
 
-        next_move = path_next[0]-start[0], path_next[1]-start[1]
+        pacmanx, pacmany = gameState.getPacmanPosition()
 
-        if next_move == (0, -1):
-            move = Directions.SOUTH
-        elif next_move == (0, 1):
-            move = Directions.NORTH
-        elif next_move == (1, 0):
-            move = Directions.EAST
-        elif next_move == (-1, 0):
-            move = Directions.WEST
+        legal_actions_bool = ""
+        if "West" in gameState.getLegalPacmanActions():
+            legal_actions_bool += "1, "
+        else:
+            legal_actions_bool += "0, "
+        if "East" in gameState.getLegalPacmanActions():
+            legal_actions_bool += "1, "
+        else:
+            legal_actions_bool += "0, "
+        if "North" in gameState.getLegalPacmanActions():
+            legal_actions_bool += "1, "
+        else:
+            legal_actions_bool += "0, "
+        if "South" in gameState.getLegalPacmanActions():
+            legal_actions_bool += "1"
+        else:
+            legal_actions_bool += "0"
 
-        return move
+
+        s = ", ".join([
+            str(pacmanx),
+            str(pacmany),
+            legal_actions_bool,
+            str(gameState.getNumFood()),
+            str(gameState.getDistanceNearestFood()),
+            str(gameState.getScore()),
+            str(gameState.data.agentStates[0].getDirection())
+        ])
+
+        x = [s]
+        next_move = self.weka.predict("./ j48_attselkeyboard_cv.model", x, "./ training_keyboard_present_attsel.arff")
+
+        print next_move
+
+
+        # if next_move == (0, -1):
+        #     move = Directions.SOUTH
+        # elif next_move == (0, 1):
+        #     move = Directions.NORTH
+        # elif next_move == (1, 0):
+        #     move = Directions.EAST
+        # elif next_move == (-1, 0):
+        #     move = Directions.WEST
+        #
+        # return move
 
 
 
