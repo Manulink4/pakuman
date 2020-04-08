@@ -18,6 +18,7 @@ from game import Directions
 from keyboardAgents import KeyboardAgent
 import inference
 import busters
+import random
 
 class NullGraphics:
     "Placeholder for graphics"
@@ -73,6 +74,7 @@ class BustersAgent:
         self.elapseTimeEnable = elapseTimeEnable
         self.weka = Weka()
         self.weka.start_jvm()
+
 
     def registerInitialState(self, gameState):
         "Initializes beliefs and inference modules"
@@ -400,6 +402,7 @@ class BasicAgentAA(BustersAgent):
         return table
 
     def printInfo(self, gameState):
+        return
         print "---------------- TICK ", self.countActions, " --------------------------" ################################################################################################
         # Dimensiones del mapa
         width, height = gameState.data.layout.width, gameState.data.layout.height
@@ -447,6 +450,7 @@ class BasicAgentAA(BustersAgent):
         # next_move = path_next[0]-start[0], path_next[1]-start[1]
 
 
+
         pacmanx, pacmany = gameState.getPacmanPosition()
 
         legal_actions_bool = ""
@@ -466,35 +470,109 @@ class BasicAgentAA(BustersAgent):
             legal_actions_bool += "1"
         else:
             legal_actions_bool += "0"
+        legal = [int(i) for i in legal_actions_bool.split(",")]
+
+        aliveG = ""
+        for alive in gameState.getLivingGhosts():
+            if alive:
+                aliveG = aliveG + str(1) + ", "
+            else:
+                aliveG = aliveG + str(0) + ", "
+        aliveG = aliveG[:-2]
+        aliveghost = [int(i) for i in aliveG.split(",")]
 
 
-        s = ", ".join([
-            str(pacmanx),
-            str(pacmany),
-            legal_actions_bool,
-            str(gameState.getNumFood()),
-            str(gameState.getDistanceNearestFood()),
-            str(gameState.getScore()),
-            str(gameState.data.agentStates[0].getDirection())
-        ])
+        ghostspos = ""
+        for ghost in gameState.getGhostPositions():
+            ghostx, ghosty = ghost
+            ghostspos = ghostspos + str(ghostx) + ", " + str(ghosty) + ", "
+        ghostspos = ghostspos[:-2]
+        ghostpositions = [int(i) for i in ghostspos.split(",")]
 
-        x = [s]
-        next_move = self.weka.predict("./ j48_attselkeyboard_cv.model", x, "./ training_keyboard_present_attsel.arff")
+        ghost_dir = ""
+        for direction in [gameState.getGhostDirections().get(i) for i in range(0, gameState.getNumAgents() - 1)]:
+            if direction is "West":
+                ghost_dir += "1, 0, 0, 0, 0, "
+            elif direction is "Stop":
+                ghost_dir += "0, 1, 0, 0, 0, "
+            elif direction is "East":
+                ghost_dir += "0, 0, 1, 0, 0, "
+            elif direction is "North":
+                ghost_dir += "0, 0, 0, 1, 0, "
+            elif direction is "South":
+                ghost_dir += "0, 0, 0, 0, 1, "
+            elif direction is None:
+                ghost_dir += "0, 1, 0, 0, 0, "
 
-        print next_move
+        ghost_dir = ghost_dir[:-2]
+        ghostdirections = [int(i) for i in ghost_dir.split(",")]
 
 
-        # if next_move == (0, -1):
-        #     move = Directions.SOUTH
-        # elif next_move == (0, 1):
-        #     move = Directions.NORTH
-        # elif next_move == (1, 0):
-        #     move = Directions.EAST
-        # elif next_move == (-1, 0):
-        #     move = Directions.WEST
-        #
-        # return move
+        ghostdist = ""
+        for dist in gameState.data.ghostDistances:
+            if dist is None:
+                dist = -1
+            ghostdist = ghostdist + str(dist) + ", "
+        ghostdist = ghostdist[:-2]
+        ghostdistances = [int(i) for i in ghostdist.split(",")]
 
+        x = [pacmanx,
+             pacmany,
+             legal[0],
+             legal[1],
+             legal[2],
+             legal[3],
+             gameState.getNumAgents() - 1,
+             aliveghost[0],
+             aliveghost[1],
+             aliveghost[2],
+             aliveghost[3],
+             aliveghost[4],
+             ghostpositions[0],
+             ghostpositions[1],
+             ghostpositions[2],
+             ghostpositions[3],
+             ghostpositions[4],
+             ghostpositions[5],
+             ghostpositions[6],
+             ghostpositions[7],
+             # ghostdirections[0],
+             # ghostdirections[1],
+             # ghostdirections[2],
+             # ghostdirections[3],
+             # ghostdirections[4],
+             # ghostdirections[5],
+             # ghostdirections[6],
+             # ghostdirections[7],
+             # ghostdirections[8],
+             # ghostdirections[9],
+             # ghostdirections[10],
+             # ghostdirections[11],
+             # ghostdirections[12],
+             # ghostdirections[13],
+             # ghostdirections[14],
+             # ghostdirections[15],
+             # ghostdirections[16],
+             # ghostdirections[17],
+             # ghostdirections[18],
+             # ghostdirections[19],
+             ghostdistances[0],
+             ghostdistances[1],
+             ghostdistances[2],
+             ghostdistances[3],
+             int(gameState.getNumFood() or 0),
+             int(gameState.getDistanceNearestFood() or 0),
+             int(gameState.getScore() or 0),
+             gameState.data.agentStates[0].getDirection()]
+
+
+        next_move = self.weka.predict("./ibk1_noghosttutorial1_cv.model", x, "./training_tutorial1_present_noghostdir.arff")
+
+        if next_move in gameState.getLegalActions():
+            return next_move
+        else:
+            print "random move"
+            return random.choice(gameState.getLegalActions())
 
 
     def scorefun(self,state):

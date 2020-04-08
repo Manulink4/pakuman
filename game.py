@@ -19,6 +19,7 @@
 # purposes. The Pacman AI projects were developed at UC Berkeley, primarily by
 # John DeNero (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
 
+
 from util import *
 import time, os
 import traceback
@@ -718,7 +719,7 @@ class Game:
                     score = agent.scorefun(self.state)
 
             if hasattr(agent, "printLineData"):
-                if not os.path.exists("test_othermaps_keyboard.arff"):
+                if not os.path.exists("prueba.arff"):
 
                     header = "@RELATION pacman\n" \
                              "\n" \
@@ -775,13 +776,13 @@ class Game:
                              "\n" \
                              "@DATA\n"
 
-                    with open("test_othermaps_keyboard.arff", "a") as infile:
+                    with open("prueba.arff", "a") as infile:
                         infile.write(header)
                         infile.write(agent.printLineData(self.state))
                         restart = False
 
                 else:
-                    with open("test_othermaps_keyboard.arff", "a") as infile:
+                    with open("prueba.arff", "a") as infile:
                         if score is not None:
                             infile.write(", " + str(score) + "\n" + agent.printLineData(self.state))
                         else:
@@ -823,7 +824,8 @@ class Game:
                     return
         self.display.finish()
 
-        with open("test_othermaps_keyboard.arff", "a") as infile:
+        with open("prueba.arff", "a") as infile:
             infile.write(", 99999999")
             restart = False
 
+        self.agents[0].weka.stop_jvm()
